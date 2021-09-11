@@ -27,6 +27,22 @@ const concat = require('gulp-concat');
 const src = './src';
 const dest = './dist';
 
+// Function for reload the Browser
+const reload = (done) => {
+    browserSync.reload();
+    done();
+};
+
+// Function for serve the dev server in Brwoser
+const serve = (done) => {
+    browserSync.init({
+        server: {
+            baseDir: dest
+        }
+    });
+    done();
+};
+
 //Compile SASS to cssnano
 const css = () => {
     return gulp.src(`${src}/sass/**/*.sass`)
@@ -54,7 +70,9 @@ const css = () => {
         .pipe(postcss([autoprefixer(), cssnano()]))
         // Write Sourcemaps
         .pipe(sourcemaps.write(''))
+        // Write everythingto destination folder
         .pipe(gulp.dest(`${dest}/css`));
+        // Reload Page
 };
 
 // Compile .html to minify .html
@@ -73,8 +91,16 @@ const html = () => {
         .pipe(gulp.dest(`${dest}`));
 };
 
+// Function to watch our changes and refresh page
+const watch = () => gulp.watch([`${src}/sass/**/*.sass`], gulp.series(html, css, reload));
+
+// All tasks for this project
+const dev = gulp.series(html, css, serve, watch);
+
 // Just build the Project
-const build = gulp.series(html,css);
+const build = gulp.series(html, css);
 
 // Default function
+exports.dev = dev;
+exports.build = build;
 exports.default = build;
