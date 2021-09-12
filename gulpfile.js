@@ -70,9 +70,10 @@ const css = () => {
         .pipe(postcss([autoprefixer(), cssnano()]))
         // Write Sourcemaps
         .pipe(sourcemaps.write(''))
-        // Write everythingto destination folder
-        .pipe(gulp.dest(`${dest}/css`));
-        // Reload Page
+        // Write everything to destination folder
+        .pipe(gulp.dest(`${dest}/css`))
+        // Update Browser refresh
+        .pipe(browserSync.stream());
 };
 
 // Compile .html to minify .html
@@ -91,14 +92,47 @@ const html = () => {
         .pipe(gulp.dest(`${dest}`));
 };
 
+// Compile .js to minify .js
+const js = () => {
+    return gulp.src(`${src}/js/**/*.js`)
+        .pipe(plumber(((error) => {
+            gutil.log(error.message);
+        })))
+        // Start using Source Maps
+        .pipe(sourcemaps.init())
+        // Add multiple JS Sources
+        .pipe(concat('concat.js'))
+        // Use Babel to make script readable
+        .pipe(babel())
+        // Javascript Lint
+        .pipe(jshint())
+        // Report of jsLint
+        .pipe(jshint.reporter('jshint-stylish'))
+        // Add Browser Support
+        .pipe(browserify({
+            insertGlobals: true
+        }))
+        // Minify JS
+        .pipe(uglify())
+        // Add Suffix
+        .pipe(rename({ basename: 'app', suffix: ".min" }))
+        // Write Sourcemaps
+        .pipe(sourcemaps.write(''))
+        // Write everything to destination folder
+        .pipe(gulp.dest(`${dest}/js`))
+        // Update Browser refresh
+        .pipe(browserSync.stream());
+};
+
+
 // Function to watch our changes and refresh page
-const watch = () => gulp.watch([`${src}/sass/**/*.sass`], gulp.series(html, css, reload));
+const watch = () => gulp.watch([`${src}/sass/**/*.sass`, `${src}/js/**/*.js`, `${src}/*.html`], gulp.series(html, css, js, reload));
 
 // All tasks for this project
-const dev = gulp.series(html, css, serve, watch);
+const dev = gulp.series(html, css, js, serve, watch);
 
 // Just build the Project
-const build = gulp.series(html, css);
+const build = gulp.series(html, css, js);
 
 // Default function
 exports.dev = dev;

@@ -1,19 +1,24 @@
 {
   "name": "dev-boilerplate",
-  "version": "0.0.0",
-  "description": "Entwicklungsumgebung, inkl. Gulp, ES6+ und SASS",
+  "version": "1.0.0",
+  "description": "Dies ist meine \"Standard-Entwicklungsumgebung\". Es basiert auf Gulp, Js ES6+ und SASS. Sie wird stets weiterentwickelt.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp dev",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/robertraichle/boilerplate-setup.git"
   },
   "keywords": [
-    "boilerplate"
+    "Dev Boilerplate",
+    "Gulp",
+    "JavaScript",
+    "SASS",
+    "HTML"
   ],
-  "author": "robert raichle",
+  "author": "Robert Raichle",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/robertraichle/boilerplate-setup/issues"
