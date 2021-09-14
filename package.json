@@ -1,6 +1,6 @@
 {
   "name": "dev-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dies ist meine \"Standard-Entwicklungsumgebung\". Es basiert auf Gulp, Js ES6+ und SASS. Sie wird stets weiterentwickelt.",
   "main": "index.js",
   "scripts": {

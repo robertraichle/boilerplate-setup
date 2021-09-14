@@ -46,6 +46,7 @@ const serve = (done) => {
 //Compile SASS to cssnano
 const css = () => {
     return gulp.src(`${src}/sass/**/*.sass`)
+        // Init Plumber
         .pipe(plumber())
         // Lint SASS
         .pipe(sassLint({
