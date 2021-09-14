@@ -38,7 +38,7 @@ const serve = (done) => {
     browserSync.init({
         server: {
             baseDir: dest
-        }
+        } // for local dev using proxy spec
     });
     done();
 };
