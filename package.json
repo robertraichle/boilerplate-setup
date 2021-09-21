@@ -19,7 +19,7 @@
     "HTML"
   ],
   "author": "Robert Raichle",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/robertraichle/boilerplate-setup/issues"
   },
